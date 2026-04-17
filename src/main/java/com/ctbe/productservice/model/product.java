@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
-public class product {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,9 +26,9 @@ public class product {
     private String category;
 
     // Constructors
-    public product() {}
+    public Product() {}
 
-    public product(String name, double price, int stockQty, String category) {
+    public Product(String name, double price, int stockQty, String category) {
         this.name = name;
         this.price = price;
         this.stockQty = stockQty;

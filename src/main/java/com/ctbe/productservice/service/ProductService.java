@@ -3,7 +3,7 @@ package com.ctbe.productservice.service;
 import com.ctbe.productservice.dto.ProductRequest;
 import com.ctbe.productservice.dto.ProductResponse;
 import com.ctbe.productservice.exception.ResourceNotFoundException;
-import com.ctbe.productservice.model.product;
+import com.ctbe.productservice.model.Product;
 import com.ctbe.productservice.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,21 +27,21 @@ public class ProductService {
 
     // Read - Get product by ID
     public ProductResponse findById(Long id) {
-        product product = repo.findById(id)
+        Product product = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
         return toResponse(product);
     }
 
     // Create - Save new product
     public ProductResponse create(ProductRequest request) {
-        product product = toEntity(request);
-        product saved = repo.save(product);
+        Product product = toEntity(request);
+        Product saved = repo.save(product);
         return toResponse(saved);
     }
 
     // Update - Replace existing product
     public ProductResponse update(Long id, ProductRequest request) {
-        product existing = repo.findById(id)
+        Product existing = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
         
         existing.setName(request.getName());
@@ -49,7 +49,7 @@ public class ProductService {
         existing.setStockQty(request.getStockQty());
         existing.setCategory(request.getCategory());
         
-        product updated = repo.save(existing);
+        Product updated = repo.save(existing);
         return toResponse(updated);
     }
 
@@ -62,7 +62,7 @@ public class ProductService {
     }
 
     // Mapping helpers
-    private ProductResponse toResponse(product product) {
+    private ProductResponse toResponse(Product product) {
         return new ProductResponse(
             product.getId(),
             product.getName(),
@@ -72,8 +72,8 @@ public class ProductService {
         );
     }
 
-    private product toEntity(ProductRequest request) {
-        return new product(
+    private Product toEntity(ProductRequest request) {
+        return new Product(
             request.getName(),
             request.getPrice(),
             request.getStockQty(),
